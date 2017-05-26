@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as courseActions from '../../actions/courseActions';
+import CourseList from './CourseList';
 
 class CoursePage extends React.Component {
   constructor(props, context) {
@@ -11,26 +12,6 @@ class CoursePage extends React.Component {
         title: ''
       }
     };
-
-    this.onTitleChange = this
-      .onTitleChange
-      .bind(this);
-    this.onClickSave = this
-      .onClickSave
-      .bind(this);
-  }
-
-  onTitleChange(event) {
-    const course = this.state.course;
-    course.title = event.target.value;
-    this.setState({course: course});
-  }
-
-  onClickSave(event) {
-    this
-      .props
-      .actions
-      .createCourse(this.state.course);
   }
 
   courseRow(course, index) {
@@ -38,19 +19,11 @@ class CoursePage extends React.Component {
   }
 
   render() {
+    const {courses} = this.props;
     return (
       <div>
         <h1>Courses</h1>
-        {this
-          .props
-          .courses
-          .map(this.courseRow)}
-        <h2>Add Course</h2>
-        <input
-          type="text"
-          onChange={this.onTitleChange}
-          value={this.state.courseTitle}/>
-        <input type="submit" value="save" onClick={this.onClickSave}/>
+        <CourseList courses ={courses} />
       </div>
     );
   }
